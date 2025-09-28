@@ -26,7 +26,7 @@ _start:
     mov eax, 3              ;set system to read and stdin to take user input
     mov ebx, 0
     mov ecx, digit1
-    mov edx, 2
+    mov edx, 1
     int 0x80
 
     mov eax, 4              ;set system to write and stdout to print promptD2
@@ -38,7 +38,7 @@ _start:
     mov eax, 3              ;set system to read and stdin to take user input
     mov ebx, 0
     mov ecx, digit2
-    mov edx, 2
+    mov edx, 1
     int 0x80
 
     mov al, [digit1]
@@ -58,7 +58,7 @@ _start:
     int 0x80
 
     mov eax, 4              ;set system to write and stdout to print "total"
-    mov eax, 1
+    mov ebx, 1
     mov ecx, total
     mov edx, 1
     int 0x80
