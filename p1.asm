@@ -1,19 +1,17 @@
 section .data
-    promptD1 db "Enter a single digit: ",10,0    ;set aside space and define space for messages
+    promptD1 db "Enter a single digit: ",0    ;set aside space and define space for messages
     msg1 equ $ - promptD1 
 
-    promptD2 db "Enter a single digit: ",10,0
+    promptD2 db "Enter a single digit: ",0
     msg2 equ $ - promptD2
 
-    Result db "Result : ",10,0
+    Result db "Result : ",0
     msg3 equ $ - Result
 
-
-
 section .bss
-    digit1 resb 2           ;set aside space for digit1 and digit2 and total
-    digit2 resb 2
-    total resb 3
+    digit1 resb 1           ;set aside space for digit1 and digit2 and total
+    digit2 resb 1
+    total resb 1
 
 section .text
     GLOBAL _start
@@ -43,17 +41,15 @@ _start:
     mov edx, 2
     int 0x80
 
-    mov al, [digit1]        ;convert from ASCII
+    mov al, [digit1]
     sub al, '0'
     mov bl, [digit2]
     sub bl, '0'
 
     add al, bl
-    add a1, '0'             ;convert back to ASCII
-    
+
+    add al, '0'
     mov [total], al
-    mov byte [total+1], 10
-    mov byte [total+2], 0
 
     mov eax, 4              ;set system to write and stdout to print "Result: "
     mov ebx, 1
@@ -64,7 +60,7 @@ _start:
     mov eax, 4              ;set system to write and stdout to print "total"
     mov eax, 1
     mov ecx, total
-    mov edx, 2
+    mov edx, 1
     int 0x80
 
 
