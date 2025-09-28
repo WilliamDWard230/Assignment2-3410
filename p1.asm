@@ -40,15 +40,15 @@ _start:
     mov edx, 2
     int 0x80
 
-    mov ax, [digit1]        ;convert from ASCII
+    movzx ax, byte [digit1]        ;convert from ASCII
     sub ax, '0'
-    mov bx, [digit2]
-    sub ax, '0'
+    movzx bx, byte [digit2]
+    sub bx, '0'
 
     add ax, bx
 
     add ax, '0'             ;convert back to ASCII
-    mov [total], ax
+    mov [total], al
     mov byte [total+1], 0
 
     mov eax, 4              ;set system to write and stdout to print "Result: "
