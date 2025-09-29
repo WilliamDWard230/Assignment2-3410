@@ -1,8 +1,14 @@
+;William Ward | CSC-3410 | Assignment2 | 09/29/25
+
 section .data
-    promptD1 db "Please enter a single digit number: ",0    ;set aside space and define space for messages
+
+    Title db "The Multiplying Program",10
+    msg equ $ - Title
+
+    promptD1 db "Please enter a single digit number: ",10    ;set aside space and define space for messages
     msg1 equ $ - promptD1 
 
-    promptD2 db "Please enter a single digit number: ",0
+    promptD2 db "Please enter a single digit number: ",10
     msg2 equ $ - promptD2
 
     Result db "The answer is: ",0
@@ -20,8 +26,12 @@ section .text
 
 _start:
 
-    xor ax, ax
+    mov eax, 4              ;print the program title
+    mov ebx, 1
+    mov ecx, Title
+    mov edx, msg
     int 0x80
+
 
     mov eax, 4              ;set system to write and stdout to print promptD1
     mov ebx, 1
@@ -35,7 +45,7 @@ _start:
     mov edx, 2
     int 0x80
 
-    mov al, [digit1]
+    mov al, [digit1]        ;reduce to one bit
     mov[digit1], al
 
     mov eax, 4              ;set system to write and stdout to print promptD2
@@ -50,17 +60,17 @@ _start:
     mov edx, 2
     int 0x80
 
-    mov al, [digit2]
+    mov al, [digit2]        ;reduce to one bit
     mov [digit2], al
 
-    mov al, [digit1]
+    mov al, [digit1]        ;convert from ascii
     sub al, '0'
     mov bl, [digit2]
     sub bl, '0'
 
-    imul bl
+    imul bl                 ;one parameter integer multiplication
 
-    add al, '0'
+    add al, '0'             ;convert back to ascii
     mov [total], al
 
     mov eax, 4              ;set system to write and stdout to print "Result: "
@@ -75,7 +85,7 @@ _start:
     mov edx, 1
     int 0x80
 
-    mov eax, 4
+    mov eax, 4              ;newline to match example output
     mov ebx, 1
     mov ecx, newline
     mov edx, 1
@@ -83,5 +93,4 @@ _start:
 
 
     mov eax, 1              ;End program
-    xor ebx,ebx
     int 0x80
