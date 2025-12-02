@@ -16,10 +16,10 @@ int fact(int n);
 int is_palindromeC(char* s);
 
 int main() {
-    int choice; 
+    int choice, result; 
     char buffer[256];
     char num1[256] , num2[256];
-    int result;
+
 
     while(1){
         printf("Menu: \n");
@@ -29,7 +29,7 @@ int main() {
         printf("4) Test if a string is a palindrome (ASM -> C) \n");
         printf("5) Exit \n\n");
 
-        printf("Enter choice: ");
+        printf("Enter choice: ");       //print menue while not 5
 
         if(scanf("%d", &choice) != 1){
             while(getchar() != '\n');
@@ -56,10 +56,14 @@ int main() {
                 break;
             case 2:
                 printf("Enter a string: ");
+
                 if(fgets(buffer,sizeof(buffer), stdin)==NULL){
                     break;
                 }
+
+                buffer[strcspn(buffer, "\n")] = '\0';           //cheeky work around for newline
                 result = is_palindromeASM(buffer);
+
                 if(result) {
                     printf("It is a palindrome! \n\n");
                 }
@@ -84,20 +88,23 @@ int main() {
 
                 break;
             case 5:
-                return 0;
+                return 0;           //exit
                 break;
             default:
-                printf("You Entered an Invalid Choice. Please try again\n\n");
+                printf("You Entered an Invalid Choice. Please try again\n\n");  //input issue
                 break;
         }
     }
+
     return 0;
 }
 
 
 int is_palindromeC(char* s){
     int length = strlen(s);
+
     for(int i = 0; i<length/2; i++){
+
         if( s[i] != s[length-1-i]){
             return 0;
         }

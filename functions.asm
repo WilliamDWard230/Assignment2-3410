@@ -1,17 +1,17 @@
 ; William Ward | Functions for C Palindrome file | 12/01/25
 
-section .data
+section .data                           ;my messages
     msg1 db "Enter a string: ", 0
     len1 equ $ - msg1
 
     msg2 db "It is a palindrome!", 0
     len2 equ $ -msg2
 
-    msg3 db "It is NOT a palindrome1", 0
+    msg3 db "It is NOT a palindrome!", 0
     len3 equ $ - msg3
 
 section .bss
-    input resb 256
+    input resb 256          ;buffer for user input
 
 section .text
     global is_palindromeASM,factstr,addstr,palindrome_check
@@ -26,7 +26,7 @@ section .text
     extern stdin
     extern fact
 
-addstr:
+addstr:         ;convert strings to ints
     ;lets start
     push ebp
     mov ebp,esp
@@ -73,10 +73,10 @@ is_palindromeASM:
     add esi, eax
     dec esi
 
-    shr ecx,1
+    shr ecx,1               ;math
     jz .is_palindrome
 
-.main_loop:
+.main_loop:                 ;work through both ends and check if equal after dec/inc
     mov al, [edi]
     mov bl, [esi]
     cmp al,bl
@@ -102,11 +102,11 @@ is_palindromeASM:
     pop ebp
     ret
 
-factstr:
+factstr:            ;convert string to into and call C fact()
     push ebp
     mov ebp, esp
 
-    mov eax, [eax+8]
+    mov eax, [ebp+8]
     push eax
     call atoi
     add esp,4
@@ -120,7 +120,7 @@ factstr:
 
 ;C function calls
 
-palindrome_check:
+palindrome_check:       ;take string and call C palindrome check()
     push ebp
     mov ebp, esp
     sub esp, 4
@@ -172,6 +172,7 @@ palindrome_check:
     add esp,4
 
 .end:
+    pop ebx
     mov esp, ebp
     pop ebp
     ret
