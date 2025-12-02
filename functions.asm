@@ -26,6 +26,7 @@ section .text
     extern stdin
     extern fact
 
+addstr:
     ;lets start
     push ebp
     mov ebp,esp
@@ -69,7 +70,7 @@ is_palindromeASM:
     jz .is_palindrome
 
     mov edi, esi
-    add esi, edx
+    add esi, eax
     dec esi
 
     shr ecx,1
@@ -101,6 +102,21 @@ is_palindromeASM:
     pop ebp
     ret
 
+factstr:
+    push ebp
+    mov ebp, esp
+
+    mov eax, [eax+8]
+    push eax
+    call atoi
+    add esp,4
+
+    push eax
+    call fact
+    add esp,4
+
+    pop ebp
+    ret
 
 ;C function calls
 
